@@ -1,11 +1,11 @@
-package cn.huan.community.community.domain;
+package cn.huan.community.community.dto;
 
-import lombok.AllArgsConstructor;
+import cn.huan.community.community.domain.User;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-public class Problem {
+public class ProblemDTO {
+
     private Integer id;
     private String title;
     private String description;
@@ -16,4 +16,5 @@ public class Problem {
     private Integer viewCount;
     private Integer likeCount;
     private String tags;
+    private User user;
 }
