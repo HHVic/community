@@ -1,9 +1,14 @@
 package cn.huan.community.community.service;
 
+import cn.huan.community.community.dao.ProblemDao;
 import cn.huan.community.community.domain.Problem;
+import cn.huan.community.community.dto.PageProblemDTO;
 import cn.huan.community.community.dto.ProblemDTO;
 import cn.huan.community.community.mapper.ProblemMapper;
 import cn.huan.community.community.mapper.UserMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +25,8 @@ public class ProblemService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ProblemDao problemDao;
 
     @Transactional
     public void add(Problem problem) {
@@ -27,14 +34,19 @@ public class ProblemService {
     }
 
     public List<ProblemDTO> list() {
-        List<ProblemDTO> list = new ArrayList<>();
-        List<Problem> problem = problemMapper.list();
-        for (Problem pro : problem) {
-            ProblemDTO problemDTO = new ProblemDTO();
-            BeanUtils.copyProperties(pro,problemDTO);
-            problemDTO.setUser(userMapper.getById(pro.getCreator()));
-            list.add(problemDTO);
-        }
-        return list;
+        return problemDao.list();
+    }
+
+    public PageProblemDTO listPage(Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        PageProblemDTO pageProblemDTO = new PageProblemDTO();
+        PageInfo<ProblemDTO> pageInfo = new PageInfo<>(list());
+
+        pageProblemDTO.setPageNum(pageInfo.getPageNum());
+        pageProblemDTO.setPageSize(pageInfo.getPageSize());
+        pageProblemDTO.setTotalCount((int) pageInfo.getTotal());
+        pageProblemDTO.setTotalPage(pageInfo.getPages());
+        pageProblemDTO.setProblems(pageInfo.getList());
+        return pageProblemDTO;
     }
 }

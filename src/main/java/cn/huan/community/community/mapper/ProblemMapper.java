@@ -1,6 +1,7 @@
 package cn.huan.community.community.mapper;
 
 import cn.huan.community.community.domain.Problem;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
