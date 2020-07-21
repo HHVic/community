@@ -15,13 +15,11 @@ public class UserService {
     private UserMapper userMapper;
 
     @Transactional
-    public int loginFromGithub(GithubUser githubUser){
-        User u = new User();
-        u.setAccountId(githubUser.getId().toString());
-        u.setUserName(githubUser.getLogin());
-        u.setToken(UUID.randomUUID().toString());
-        u.setGmtCreate(System.currentTimeMillis());
-        u.setGmtModified(System.currentTimeMillis());
-        return userMapper.insert(u);
+    public int loginFromGithub(User user){
+        return userMapper.insert(user);
+    }
+
+    public User getByToken(String token) {
+        return userMapper.getByToken(token);
     }
 }

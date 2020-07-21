@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.UUID;
+
 @SpringBootTest(classes={CommunityApplication.class, UserMapper.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class LoginTest {
@@ -22,6 +24,20 @@ public class LoginTest {
         GithubUser githubUser = new GithubUser();
         githubUser.setId(44734532L);
         githubUser.setLogin("HHVic");
-        System.out.println(userService.loginFromGithub(githubUser));
+
+        User u = new User();
+        u.setAccountId(githubUser.getId().toString());
+        u.setUserName(githubUser.getLogin());
+        String token1 = UUID.randomUUID().toString();
+        u.setToken(token1);
+        u.setGmtCreate(System.currentTimeMillis());
+        u.setGmtModified(System.currentTimeMillis());
+        System.out.println(userService.loginFromGithub(u));
+    }
+    @Test
+    public void testToken(){
+        String token = "bbbf543a-6938-4e43-99c5-cde7b9c29cd4";
+        User user = userService.getByToken(token);
+        System.out.println(user);
     }
 }
