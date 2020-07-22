@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PageProblemDTO {
+public class PagenationDTO<T> {
     private int pageNum;
     private int pageSize;
     private int totalPage;
     private int totalCount;
-    private List<ProblemDTO> problems;
+    private List<T> problems;
 }

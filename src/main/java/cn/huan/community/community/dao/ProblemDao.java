@@ -12,4 +12,10 @@ public interface ProblemDao {
                     @Result(property="user",column="creator",one=@One(select="cn.huan.community.community.mapper.UserMapper.getById"))
     })
     List<ProblemDTO> list();
+
+    @Select("select * from problem where creator = #{userId}")
+    @Results({
+            @Result(property="user",column="creator",one=@One(select="cn.huan.community.community.mapper.UserMapper.getById"))
+    })
+    List<ProblemDTO> listByUser(@Param("userId")int userId);
 }
