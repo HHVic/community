@@ -1,10 +1,9 @@
 package cn.huan.community.community.interceptor;
 
-import cn.huan.community.community.domain.User;
-import cn.huan.community.community.service.UserService;
+import cn.huan.community.community.domain.Account;
+import cn.huan.community.community.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,19 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         //System.out.println("经过session拦截器");
         //判断用户是否存在
         Cookie[] cookies = request.getCookies();
-        User user = null;
+        Account account = null;
         for (Cookie cookie : cookies) {
             if("token".equals(cookie.getName())){
                 String token = cookie.getValue();
-                user = userService.getByToken(token);
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
+                account = accountService.getByToken(token);
+                if(account != null){
+                    request.getSession().setAttribute("user",account);
                 }
                 break;
             }

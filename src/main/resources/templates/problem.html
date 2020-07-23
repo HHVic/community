@@ -18,7 +18,7 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h3><span th:text="${problem.title}"></span>&nbsp;</h3>
             <span class="text-desc">
-                作者：<span th:text="${problem.user.userName}"></span> |
+                作者：<span th:text="${problem.account.userName}"></span> |
                 发布时间：<span th:text="${#dates.format(problem.gmtCreate,'yyyy年MM月dd日 HH:mm')}"></span> |
                 阅读数：<span th:text="${problem.viewCount}"></span>次浏览
             </span>
@@ -39,12 +39,12 @@
             <div class="media" style="overflow: inherit;margin-left: 10px">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded img-small" th:src="${problem.user.avatarUrl}">
+                        <img class="media-object img-rounded img-small" th:src="${problem.account.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <span th:text="${problem.user.userName}"></span>
+                        <span th:text="${problem.account.userName}"></span>
                     </h4>
                 </div>
             </div><br/>

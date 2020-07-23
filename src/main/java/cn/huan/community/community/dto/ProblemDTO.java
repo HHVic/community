@@ -1,6 +1,6 @@
 package cn.huan.community.community.dto;
 
-import cn.huan.community.community.domain.User;
+import cn.huan.community.community.domain.Account;
 import lombok.Data;
 
 @Data
@@ -16,5 +16,5 @@ public class ProblemDTO {
     private Integer viewCount;
     private Integer likeCount;
     private String tags;
-    private User user;
+    private Account account;
 }

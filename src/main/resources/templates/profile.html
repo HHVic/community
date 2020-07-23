@@ -21,7 +21,7 @@
             <div class="media" th:each="problem : ${pages.problems}">
                 <div class="media-left">
                     <a th:href="@{'/problems/' + ${problem.id}}">
-                        <img class="media-object img-rounded img-small" th:src="${problem.user.avatarUrl}">
+                        <img class="media-object img-rounded img-small" th:src="${problem.account.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">

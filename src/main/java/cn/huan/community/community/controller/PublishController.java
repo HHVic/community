@@ -1,18 +1,14 @@
 package cn.huan.community.community.controller;
 
+import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.domain.Problem;
-import cn.huan.community.community.domain.User;
 import cn.huan.community.community.service.ProblemService;
-import cn.huan.community.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class PublishController {
@@ -49,8 +45,8 @@ public class PublishController {
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
-        User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
+        Account account = (Account) request.getSession().getAttribute("user");
+        if(account == null){
             model.addAttribute("error","您还没有登录，去<a href='https://github.com/login/oauth/authorize?client_id=689c94ad0ea8ba8267bb&redirect_uri=http://huan.cross.echosite.cn/callback&scope=user&state=1'>登录</a>");
             return "publish";
         }
@@ -58,7 +54,7 @@ public class PublishController {
         problem.setTitle(title);
         problem.setDescription(description);
         problem.setTags(tags);
-        problem.setCreator(Integer.valueOf(user.getAccountId()));
+        problem.setCreator(Integer.valueOf(account.getAccountId()));
         problem.setId(id);
         problemService.createOrUpdate(problem);
         return "redirect:";
@@ -67,7 +63,7 @@ public class PublishController {
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable("id")int id,Model model,
                        HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+        Account account = (Account) request.getSession().getAttribute("user");
         Problem problem = problemService.getById(id);
         String title = problem.getTitle();
         String description = problem.getDescription();

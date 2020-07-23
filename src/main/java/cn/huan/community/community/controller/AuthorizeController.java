@@ -1,10 +1,10 @@
 package cn.huan.community.community.controller;
 
-import cn.huan.community.community.domain.User;
+import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.dto.AccessToken;
 import cn.huan.community.community.dto.GithubUser;
 import cn.huan.community.community.provider.GithubProvider;
-import cn.huan.community.community.service.UserService;
+import cn.huan.community.community.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.UUID;
 
 @Controller
@@ -23,7 +22,7 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
     @Value("${Github.client.id}")
     private String client_id;
     @Value("${Github.client.secret}")
@@ -49,15 +48,15 @@ public class AuthorizeController {
 
         if(user != null){
             //登录成功
-            User u = new User();
-            u.setAccountId(user.getId().toString());
-            u.setUserName(user.getLogin());
+            Account account = new Account();
+            account.setAccountId(user.getId().toString());
+            account.setUserName(user.getLogin());
             String token1 = UUID.randomUUID().toString();
-            u.setToken(token1);
-            u.setGmtCreate(System.currentTimeMillis());
-            u.setGmtModified(System.currentTimeMillis());
-            u.setAvatarUrl(user.getAvatarUrl());
-            if(userService.loginFromGithub(u) == 1){
+            account.setToken(token1);
+            account.setGmtCreate(System.currentTimeMillis());
+            account.setGmtModified(System.currentTimeMillis());
+            account.setAvatarUrl(user.getAvatarUrl());
+            if(accountService.loginFromGithub(account) == 1){
                 //写cookie
                 response.addCookie(new Cookie("token",token1));
                 //request.getSession().setAttribute("user",user);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.huan.community.community.dao.ProblemDao">
+    <resultMap extends="cn.huan.community.community.mapper.ProblemMapper.BaseResultMap" id="ProblemUserMap" type="cn.huan.community.community.dto.ProblemDTO">
+        <!--一对一教师个人基本信息实体映射-->
+        <association property="account" javaType="cn.huan.community.community.domain.Account" resultMap="cn.huan.community.community.mapper.AccountMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="list" resultMap="ProblemUserMap">
+        SELECT
+            p.*,
+            a.*
+        FROM
+            problem p
+            LEFT JOIN account a ON p.creator = a.account_id
+    </select>
+
+    <select id="listByUser" resultMap="ProblemUserMap">
+        SELECT
+            p.*,
+            a.*
+        FROM
+            problem p
+            LEFT JOIN account a ON p.creator = a.account_id
+        WHERE
+            p.creator = #{userId}
+    </select>
+</mapper>

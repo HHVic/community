@@ -4,8 +4,8 @@ import cn.huan.community.community.dao.ProblemDao;
 import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.dto.PagenationDTO;
 import cn.huan.community.community.dto.ProblemDTO;
+import cn.huan.community.community.mapper.AccountMapper;
 import cn.huan.community.community.mapper.ProblemMapper;
-import cn.huan.community.community.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,11 @@ public class ProblemService {
     private ProblemMapper problemMapper;
 
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private ProblemDao problemDao;
 
     @Transactional
     public void add(Problem problem) {
-        problemMapper.add(problem);
+        problemMapper.insert(problem);
     }
 
     public List<ProblemDTO> list() {
@@ -63,7 +61,8 @@ public class ProblemService {
 
 
     public Problem getById(int id) {
-        return problemMapper.getById(id);
+
+        return problemMapper.selectByPrimaryKey(id);
     }
 
     public void createOrUpdate(Problem problem) {
@@ -71,11 +70,19 @@ public class ProblemService {
             //创建
             problem.setGmtCreate(System.currentTimeMillis());
             problem.setGmtModified(System.currentTimeMillis());
-            problemMapper.add(problem);
+            problem.setCommentCount(0);
+            problem.setLikeCount(0);
+            problem.setViewCount(0);
+            problemMapper.insert(problem);
         }else{
             //更新
+            Problem problemsource = problemMapper.selectByPrimaryKey(problem.getId());
+            problem.setCommentCount(problemsource.getCommentCount() == null ? 0 : problemsource.getCommentCount());
+            problem.setLikeCount(problemsource.getLikeCount() == null ? 0 : problemsource.getLikeCount());
+            problem.setViewCount(problemsource.getViewCount() == null ? 0 : problemsource.getViewCount());
+            problem.setGmtCreate(problemsource.getGmtCreate());
             problem.setGmtModified(System.currentTimeMillis());
-            problemMapper.update(problem);
+            problemMapper.updateByPrimaryKey(problem);
         }
     }
 }
