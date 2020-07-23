@@ -4,7 +4,6 @@ import cn.huan.community.community.dao.ProblemDao;
 import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.dto.PagenationDTO;
 import cn.huan.community.community.dto.ProblemDTO;
-import cn.huan.community.community.mapper.AccountMapper;
 import cn.huan.community.community.mapper.ProblemMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

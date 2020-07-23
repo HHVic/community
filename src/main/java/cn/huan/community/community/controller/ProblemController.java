@@ -1,7 +1,10 @@
 package cn.huan.community.community.controller;
 
 import cn.huan.community.community.domain.Account;
+import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.dto.ProblemDTO;
+import cn.huan.community.community.exception.CustomizeErrorCode;
+import cn.huan.community.community.exception.CustomizeException;
 import cn.huan.community.community.service.ProblemService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,11 @@ public class ProblemController {
     @GetMapping("/{id}")
     public String problem(@PathVariable("id")int id, Model model, HttpServletRequest request){
         ProblemDTO problemDTO = new ProblemDTO();
-        BeanUtils.copyProperties(problemService.getById(id),problemDTO);
+        Problem problem = problemService.getById(id);
+        if(problem == null){
+            throw new CustomizeException(CustomizeErrorCode.PROBLEM_NOT_FOUND);
+        }
+        BeanUtils.copyProperties(problem,problemDTO);
         Account account = (Account) request.getSession().getAttribute("user");
         problemDTO.setAccount(account);
         model.addAttribute("problem",problemDTO);
