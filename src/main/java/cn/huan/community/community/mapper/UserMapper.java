@@ -3,6 +3,7 @@ package cn.huan.community.community.mapper;
 import cn.huan.community.community.domain.User;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 @Mapper
 public interface UserMapper {
@@ -27,4 +28,8 @@ public interface UserMapper {
 
     @Select("SELECT id,account_id,user_name,token,gmt_create,gmt_modified,avatar_url FROM user WHERE account_id=#{id}")
     User getById(@Param("id") Integer id);
+
+    @Update("update user set user_name = #{userName},token = #{token},gmt_modified = #{gmtModified},avatar_url = #{avatarUrl} where id={id}")
+    //@Qualifier
+    int update(User u);
 }

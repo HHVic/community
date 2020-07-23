@@ -2,9 +2,7 @@ package cn.huan.community.community.mapper;
 
 import cn.huan.community.community.domain.Problem;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -17,4 +15,10 @@ public interface ProblemMapper {
 
     @Select("select * from problem")
     List<Problem> list();
+
+    @Select("select * from problem where id=#{id}")
+    Problem getById(@Param("id") int id);
+
+    @Update("update problem set title = #{title},description = #{description},gmt_modified#{gmtModified},tags = #{tags} where id={id}")
+    void update(Problem problem);
 }

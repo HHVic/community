@@ -16,7 +16,18 @@ public class UserService {
 
     @Transactional
     public int loginFromGithub(User user){
-        return userMapper.insert(user);
+        User u = userMapper.getById(Integer.valueOf(user.getId() + ""));
+        if(u == null){
+            //插入
+            return userMapper.insert(user);
+        }else{
+            //更新token
+            u.setAvatarUrl(user.getAvatarUrl());
+            u.setGmtModified(user.getGmtModified());
+            u.setToken(user.getToken());
+            u.setUserName(user.getUserName());
+            return userMapper.update(u);
+        }
     }
 
     public User getByToken(String token) {

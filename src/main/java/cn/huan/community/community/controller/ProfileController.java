@@ -19,27 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
-    @Autowired
-    private UserService userService;
+
     @Autowired
     private ProblemService problemService;
     @GetMapping("/{action}")
     public String profile(@PathVariable("action")String action, Model model, HttpServletRequest request,
                           @RequestParam(value = "page",defaultValue = "1")int page,
                           @RequestParam(value = "size",defaultValue = "2")int size){
-        //判断用户是否存在
-        Cookie[] cookies = request.getCookies();
-        User user = null;
-        for (Cookie cookie : cookies) {
-            if("token".equals(cookie.getName())){
-                String token = cookie.getValue();
-                user = userService.getByToken(token);
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             //model.addAttribute("error","您还没有登录，去<a href='https://github.com/login/oauth/authorize?client_id=689c94ad0ea8ba8267bb&redirect_uri=http://huan.cross.echosite.cn/callback&scope=user&state=1'>登录</a>");
             return "redirect:";

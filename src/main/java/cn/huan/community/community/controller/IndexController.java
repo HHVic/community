@@ -24,18 +24,7 @@ public class IndexController {
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(value = "page",defaultValue = "1")int page,
                         @RequestParam(value = "size",defaultValue = "3")int size){
-        //判断用户是否存在
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if("token".equals(cookie.getName())){
-                String token = cookie.getValue();
-                User user = userService.getByToken(token);
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         //获取文章列表
         //List<ProblemDTO> problems = problemService.list();
         PagenationDTO<ProblemDTO> pages = problemService.listPage(page,size);

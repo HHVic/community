@@ -59,4 +59,23 @@ public class ProblemService {
         pagenationDTO.setProblems(pageInfo.getList());
         return pagenationDTO;
     }
+
+
+
+    public Problem getById(int id) {
+        return problemMapper.getById(id);
+    }
+
+    public void createOrUpdate(Problem problem) {
+        if(problem.getId() == null){
+            //创建
+            problem.setGmtCreate(System.currentTimeMillis());
+            problem.setGmtModified(System.currentTimeMillis());
+            problemMapper.add(problem);
+        }else{
+            //更新
+            problem.setGmtModified(System.currentTimeMillis());
+            problemMapper.update(problem);
+        }
+    }
 }
