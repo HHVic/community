@@ -12,7 +12,7 @@
             a.*
         FROM
             problem p
-            LEFT JOIN account a ON p.creator = a.account_id
+            LEFT JOIN account a ON p.creator = a.id
     </select>
 
     <select id="listByUser" resultMap="ProblemUserMap">
@@ -21,8 +21,16 @@
             a.*
         FROM
             problem p
-            LEFT JOIN account a ON p.creator = a.account_id
+            LEFT JOIN account a ON p.creator = a.id
         WHERE
             p.creator = #{userId}
     </select>
+
+    <update id="incrView">
+        update problem set view_count = #{viewCount} + 1 where id=#{id}
+    </update>
+
+    <update id="incrComment">
+        update problem set comment_count = #{commentCount} + 1 where id=#{id}
+    </update>
 </mapper>

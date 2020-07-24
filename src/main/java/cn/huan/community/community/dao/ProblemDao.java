@@ -11,4 +11,8 @@ public interface ProblemDao {
 
 
     List<ProblemDTO> listByUser(@Param("userId")int userId);
+
+    void incrView(@Param("id")int id,@Param("viewCount")int viewCount);
+
+    void incrComment(@Param("id")Integer id, @Param("commentCount")Integer commentCount);
 }

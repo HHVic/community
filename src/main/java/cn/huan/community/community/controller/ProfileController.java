@@ -30,7 +30,7 @@ public class ProfileController {
             return "redirect:";
         }
         if("problems".equals(action)){
-            PagenationDTO<ProblemDTO> pages = problemService.listPageByUser(page,size,Integer.valueOf(account.getAccountId()));
+            PagenationDTO<ProblemDTO> pages = problemService.listPageByUser(page,size,Integer.valueOf(account.getId()));
             model.addAttribute("pages",pages);
             model.addAttribute("section","problems");
             model.addAttribute("sectionName","我的提问");

@@ -54,7 +54,7 @@ public class PublishController {
         problem.setTitle(title);
         problem.setDescription(description);
         problem.setTags(tags);
-        problem.setCreator(Integer.valueOf(account.getAccountId()));
+        problem.setCreator(Integer.valueOf(account.getId()));
         problem.setId(id);
         problemService.createOrUpdate(problem);
         return "redirect:";

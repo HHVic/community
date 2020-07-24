@@ -27,6 +27,7 @@ public class ProblemController {
     public String problem(@PathVariable("id")int id, Model model, HttpServletRequest request){
         ProblemDTO problemDTO = new ProblemDTO();
         Problem problem = problemService.getById(id);
+        problemService.incrView(problem);
         if(problem == null){
             throw new CustomizeException(CustomizeErrorCode.PROBLEM_NOT_FOUND);
         }

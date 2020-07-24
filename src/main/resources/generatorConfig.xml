@@ -38,6 +38,7 @@
         <table tableName="problem" domainObjectName="Problem" >
             <columnOverride column="description" jdbcType="VARCHAR" />
         </table>
+        <table tableName="comment" domainObjectName="Comment"></table>
 
     </context>
 </generatorConfiguration>

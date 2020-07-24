@@ -23,16 +23,19 @@ public class SessionInterceptor implements HandlerInterceptor {
         //判断用户是否存在
         Cookie[] cookies = request.getCookies();
         Account account = null;
-        for (Cookie cookie : cookies) {
-            if("token".equals(cookie.getName())){
-                String token = cookie.getValue();
-                account = accountService.getByToken(token);
-                if(account != null){
-                    request.getSession().setAttribute("user",account);
+        if(cookies != null && cookies.length > 0){
+            for (Cookie cookie : cookies) {
+                if("token".equals(cookie.getName())){
+                    String token = cookie.getValue();
+                    account = accountService.getByToken(token);
+                    if(account != null){
+                        request.getSession().setAttribute("user",account);
+                    }
+                    break;
                 }
-                break;
             }
         }
+
         return true;
     }
 

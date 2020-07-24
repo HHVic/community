@@ -2,6 +2,7 @@ package cn.huan.community.community.service;
 
 import cn.huan.community.community.dao.ProblemDao;
 import cn.huan.community.community.domain.Problem;
+import cn.huan.community.community.domain.ProblemExample;
 import cn.huan.community.community.dto.PagenationDTO;
 import cn.huan.community.community.dto.ProblemDTO;
 import cn.huan.community.community.mapper.ProblemMapper;
@@ -83,5 +84,13 @@ public class ProblemService {
             problem.setGmtModified(System.currentTimeMillis());
             problemMapper.updateByPrimaryKey(problem);
         }
+    }
+
+    public void incrView(Problem problem) {
+        problemDao.incrView(problem.getId(),problem.getViewCount());
+    }
+
+    public void incrComment(Problem problem) {
+        problemDao.incrComment(problem.getId(),problem.getCommentCount());
     }
 }
