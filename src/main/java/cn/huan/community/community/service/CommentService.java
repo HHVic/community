@@ -1,8 +1,10 @@
 package cn.huan.community.community.service;
 
+import cn.huan.community.community.dao.CommentDao;
 import cn.huan.community.community.domain.Comment;
 import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.dto.CommentDTO;
+import cn.huan.community.community.dto.CommentParamDTO;
 import cn.huan.community.community.enums.CommentTypeEnum;
 import cn.huan.community.community.exception.CustomizeErrorCode;
 import cn.huan.community.community.exception.CustomizeException;
@@ -10,6 +12,8 @@ import cn.huan.community.community.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -20,8 +24,11 @@ public class CommentService {
     @Autowired
     private ProblemService problemService;
 
+    @Autowired
+    private CommentDao commentDao;
+
     @Transactional
-    public void comment(CommentDTO commentDTO) {
+    public void comment(CommentParamDTO commentDTO) {
         Comment comment = new Comment();
         comment.setContent(commentDTO.getContent());
         comment.setCommentator(commentDTO.getCommentator());
@@ -54,5 +61,9 @@ public class CommentService {
             commentMapper.insert(comment);
             problemService.incrComment(problem);
         }
+    }
+
+    public List<CommentDTO> listByParentId(int id) {
+        return commentDao.listByParentId(id);
     }
 }

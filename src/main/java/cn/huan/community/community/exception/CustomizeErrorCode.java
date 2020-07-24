@@ -10,6 +10,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     TARGET_PARENT_NOT_FOUND(3001,"未选择任何评论"),
     TYPE_PARAM_WRONG(3002,"评论类型不存在"),
     COMMENT_NOT_FOUND(3003,"评论不存在"),
+    COMMENT_COMTENT_EMPTY(3004,"评论内容为空"),
     //5XXXX系统异常
     SYSTEM_ERROR(5001,"服务器异常"),
 

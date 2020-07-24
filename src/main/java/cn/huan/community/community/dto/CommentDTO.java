@@ -1,12 +1,10 @@
 package cn.huan.community.community.dto;
 
+import cn.huan.community.community.domain.Account;
+import cn.huan.community.community.domain.Comment;
 import lombok.Data;
 
 @Data
-public class CommentDTO {
-
-    private Integer parentId;
-    private String content;
-    private Integer type;
-    private Integer commentator;
+public class CommentDTO extends Comment {
+    private Account account;
 }

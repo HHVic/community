@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.huan.community.community.dao.CommentDao">
+    <resultMap extends="cn.huan.community.community.mapper.CommentMapper.BaseResultMap" id="CommentUserMap" type="cn.huan.community.community.dto.CommentDTO">
+        <!--一对一个人基本信息实体映射-->
+        <association property="account" javaType="cn.huan.community.community.domain.Account" resultMap="cn.huan.community.community.mapper.AccountMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="listByParentId" resultMap="CommentUserMap">
+        SELECT
+            c.*,
+            a.*
+        FROM
+            comment c
+            LEFT JOIN account a ON c.commentator = a.id
+        where
+            c.parent_id = #{parentId}
+        and
+            c.type = 1
+        order by
+            c.gmt_create
+        desc
+    </select>
+
+</mapper>
