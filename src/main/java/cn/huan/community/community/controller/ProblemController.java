@@ -4,6 +4,7 @@ import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.dto.CommentDTO;
 import cn.huan.community.community.dto.ProblemDTO;
+import cn.huan.community.community.enums.CommentTypeEnum;
 import cn.huan.community.community.exception.CustomizeErrorCode;
 import cn.huan.community.community.exception.CustomizeException;
 import cn.huan.community.community.service.CommentService;
@@ -30,18 +31,12 @@ public class ProblemController {
 
     @GetMapping("/{id}")
     public String problem(@PathVariable("id")int id, Model model, HttpServletRequest request){
-        ProblemDTO problemDTO = new ProblemDTO();
-        Problem problem = problemService.getById(id);
-        problemService.incrView(problem);
-        if(problem == null){
-            throw new CustomizeException(CustomizeErrorCode.PROBLEM_NOT_FOUND);
-        }
-        BeanUtils.copyProperties(problem,problemDTO);
-        Account account = (Account) request.getSession().getAttribute("user");
-        problemDTO.setAccount(account);
+        ProblemDTO problemDTO = problemService.getByIdWithUser(id);
+        List<CommentDTO> commentDTOS = commentService.listByParentId(id, CommentTypeEnum.PROBLEM.getType());
+        List<Problem> relations = problemService.listByTagsRelations(problemDTO);
         model.addAttribute("problem",problemDTO);
-        List<CommentDTO> commentDTOS = commentService.listByParentId(id);
         model.addAttribute("comments",commentDTOS);
+        model.addAttribute("relations",relations);
         return "problem";
     }
 }

@@ -1,8 +1,10 @@
 package cn.huan.community.community.controller;
 
+import cn.huan.community.community.cache.TagCache;
 import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.domain.Problem;
 import cn.huan.community.community.service.ProblemService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,8 @@ public class PublishController {
     private ProblemService problemService;
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("tagCache", TagCache.get());
         return "publish";
     }
 
@@ -33,6 +36,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tags",tags);
+        model.addAttribute("tagCache", TagCache.get());
         if(title == null || title == ""){
             model.addAttribute("error","标题不能为空");
             return "publish";
@@ -43,6 +47,11 @@ public class PublishController {
         }
         if(tags == null || tags == ""){
             model.addAttribute("error","标签不能为空");
+            return "publish";
+        }
+        String invalid = TagCache.filterInvalid(tags);
+        if(!StringUtils.isBlank(invalid)){
+            model.addAttribute("error","输入标签不合法:" + invalid);
             return "publish";
         }
         Account account = (Account) request.getSession().getAttribute("user");

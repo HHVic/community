@@ -6,6 +6,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     PROBLEM_NOT_FOUND(1001,"该文章不存在或者已被删除"),
     //2XXXX用户异常
     CUSTOM_NOT_FOUND(2001,"用户未登录"),
+    ACCOUNT_NOT_FOUND(2002,"用户不存在"),
     //3XXXX评论异常
     TARGET_PARENT_NOT_FOUND(3001,"未选择任何评论"),
     TYPE_PARAM_WRONG(3002,"评论类型不存在"),

@@ -16,10 +16,14 @@
         where
             c.parent_id = #{parentId}
         and
-            c.type = 1
+            c.type = #{type}
         order by
             c.gmt_create
         desc
     </select>
+
+    <update id="incrComment">
+        update comment set comment_count = #{commentCount} + 1 where id=#{id}
+    </update>
 
 </mapper>

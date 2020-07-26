@@ -41,10 +41,67 @@
     font-size: 15px;
     cursor: pointer;
 }
+
+.menu .active{
+    color: #499ef3;
+}
 .menu .icon:hover{
     color: #499ef3;
 }
 
 .comment-line{
     margin-top: 0px;
+}
+
+.sub-comment-line{
+    margin: 0 0;
+}
+
+.sub-comment{
+    margin-top: auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 14px 8px;
+}
+
+.input-comment{
+    margin-bottom: 10px;
+}
+
+.tags{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.relation{
+    list-style: none;
+    margin: 5px 0px;
+    padding: 3px 0px;
+}
+
+.relation .link:hover{
+    color: #428bca;
+}
+.relation .link{
+    cursor: pointer;
+    color: #155faa;
+    text-decoration: none;
+}
+
+.relation-list{
+    padding-inline-start:2px;
+}
+
+.nav-tag{
+    display: none;
+    margin-top: 10px;
+}
+.publish-tab-tags{
+    padding-top: 10px;
+}
+
+.publish-tab-tags .label-info{
+    white-space: normal;
+    display: inline-block;
+    margin: 5px 5px;
 }

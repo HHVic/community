@@ -21,7 +21,7 @@ public class CommentTest {
     private CommentDao commentDao;
     @Test
     public void listByParentId(){
-        List<CommentDTO> commentDTOS = commentDao.listByParentId(16);
+        List<CommentDTO> commentDTOS = commentDao.listByParentId(16,2);
         System.out.println(commentDTOS);
     }
 }

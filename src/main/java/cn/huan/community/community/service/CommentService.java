@@ -35,6 +35,7 @@ public class CommentService {
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
         comment.setLikeCount(0);
+        comment.setCommentCount(0);
         comment.setType(commentDTO.getType());
         if(commentDTO.getParentId() == null){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARENT_NOT_FOUND);
@@ -46,10 +47,12 @@ public class CommentService {
 
         if(commentDTO.getType() == CommentTypeEnum.COMMENT.getType()){
             //回复评论
-            if(commentMapper.selectByPrimaryKey(commentDTO.getParentId()) == null){
+            Comment commentSource = commentMapper.selectByPrimaryKey(commentDTO.getParentId());
+            if(commentSource == null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            commentDao.incrComment(commentSource.getId(),commentSource.getCommentCount());
         }
 
         else if(commentDTO.getType() == CommentTypeEnum.PROBLEM.getType()){
@@ -63,7 +66,7 @@ public class CommentService {
         }
     }
 
-    public List<CommentDTO> listByParentId(int id) {
-        return commentDao.listByParentId(id);
+    public List<CommentDTO> listByParentId(int id,int type) {
+        return commentDao.listByParentId(id,type);
     }
 }

@@ -8,12 +8,12 @@ import lombok.Data;
  * 异常通过通用异常处理
  */
 @Data
-public class ResultDTO {
+public class ResultDTO<T> {
 
     private int code;
     private String message;
+    private T data;
 
-    public static ResultDTO SUCCESS = ok();
 
 
     public static ResultDTO error(Integer code,String message){
@@ -31,10 +31,15 @@ public class ResultDTO {
         return error(e.getCode(),e.getMessage());
     }
 
-    private static ResultDTO ok(){
+    public static ResultDTO ok(){
+        return ok(null);
+    }
+
+    public static <T> ResultDTO ok(T t){
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setMessage("请求成功");
         resultDTO.setCode(200);
+        resultDTO.setData(t);
         return resultDTO;
     }
 }

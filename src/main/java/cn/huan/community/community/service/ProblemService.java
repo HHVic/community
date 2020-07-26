@@ -2,9 +2,10 @@ package cn.huan.community.community.service;
 
 import cn.huan.community.community.dao.ProblemDao;
 import cn.huan.community.community.domain.Problem;
-import cn.huan.community.community.domain.ProblemExample;
 import cn.huan.community.community.dto.PagenationDTO;
 import cn.huan.community.community.dto.ProblemDTO;
+import cn.huan.community.community.exception.CustomizeErrorCode;
+import cn.huan.community.community.exception.CustomizeException;
 import cn.huan.community.community.mapper.ProblemMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -92,5 +94,33 @@ public class ProblemService {
 
     public void incrComment(Problem problem) {
         problemDao.incrComment(problem.getId(),problem.getCommentCount());
+    }
+
+    @Transactional
+    public ProblemDTO getByIdWithUser(int id) {
+        ProblemDTO problemDTO = problemDao.getByIdWithUser(id);
+        validate(problemDTO);
+        //增加访问量
+        problemDao.incrView(problemDTO.getId(), problemDTO.getViewCount());
+        return problemDTO;
+    }
+
+    public List<Problem> listByTagsRelations(ProblemDTO problemDTO) {
+        validate(problemDTO);
+        if(problemDTO.getTags() != null){
+            String tags = problemDTO.getTags().replace(',','|');
+            List<Problem> relations = problemDao.listByTagsRelations(problemDTO.getId(),tags);
+            return relations;
+        }
+        return new ArrayList<>();
+    }
+
+    public void validate(ProblemDTO problemDTO){
+        if(problemDTO == null){
+            throw new CustomizeException(CustomizeErrorCode.PROBLEM_NOT_FOUND);
+        }
+        if(problemDTO.getAccount() == null){
+            throw new CustomizeException(CustomizeErrorCode.ACCOUNT_NOT_FOUND);
+        }
     }
 }
