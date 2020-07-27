@@ -79,10 +79,11 @@
     padding: 3px 0px;
 }
 
-.relation .link:hover{
+.text-link:hover{
     color: #428bca;
+    text-decoration: none;
 }
-.relation .link{
+.text-link{
     cursor: pointer;
     color: #155faa;
     text-decoration: none;

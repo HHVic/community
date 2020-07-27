@@ -12,6 +12,9 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     TYPE_PARAM_WRONG(3002,"评论类型不存在"),
     COMMENT_NOT_FOUND(3003,"评论不存在"),
     COMMENT_COMTENT_EMPTY(3004,"评论内容为空"),
+    //4XXXX通知异常
+    NOTIFICATION_NOT_FOUND(4001,"通知不存在"),
+    NOTIFICATION_NOT_MATCHED(4002,"此通知不属于你"),
     //5XXXX系统异常
     SYSTEM_ERROR(5001,"服务器异常"),
 

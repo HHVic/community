@@ -18,51 +18,72 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span th:text="${sectionName}"></span>&nbsp;</h2>
             <hr>
-            <div class="media" th:each="problem : ${pages.problems}">
-                <div class="media-left">
-                    <a th:href="@{'/problems/' + ${problem.id}}">
-                        <img class="media-object img-rounded img-small" th:src="${problem.account.avatarUrl}">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading" th:text="${problem.title}"></h4>
-                    <span class="text-desc">
+            <!-- 我的问题页面 -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'problems'}">
+                <div class="media" th:each="problem : ${pages.data}">
+                    <div class="media-left">
+                        <a th:href="@{'/problems/' + ${problem.id}}">
+                            <img class="media-object img-rounded img-small" th:src="${problem.account.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" th:text="${problem.title}"></h4>
+                        <span class="text-desc">
                         <span th:text="${problem.commentCount}"></span>个回复
                         <span th:text="${problem.viewCount}"></span>次浏览
                         <span th:text="${#dates.format(problem.gmtCreate,'yyyy年MM月dd日')}"></span>
+                        <a class="text-desc" th:href="@{'/publish/' + ${problem.id}}">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑
+                        </a>
                     </span>
+                    </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation">
+            <!-- 消息通知页面 -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'replies'}">
+                <div class="media" th:each="notification : ${pages.data}">
+                    <span th:text="${notification.notifierName + ' ' + notification.typeName}"></span>
+                    <a th:href="@{'/notification/' + ${notification.id}}"
+                       class="text-link" th:text="${notification.outerTitle}"></a>
+                    <span th:if="${notification.status == 1}" class="label label-success">已读</span>
+                    <span th:if="${notification.status == 0}" class="label label-warning">未读</span>
+                    <br/>
+                    <span class="pull-left text-desc" th:text="${#dates.format(notification.gmtCreate,'yyyy年MM月dd日')}"></span>
+                    <br/>
+                    <hr class="sub-comment-line"/>
+                </div>
+
+            </div>
+            <!-- 分页导航 -->
+            <nav aria-label="Page navigation" th:if="${not #lists.isEmpty(pages.data)}">
                 <ul class="pagination">
                     <li th:if="${pages.pageNum != 1}">
-                        <a aria-label="Previous" th:if="${section == 'problems'}" th:href="@{'/profile/' + ${section}(page=${pages.pageNum - 1})}">
+                        <a aria-label="Previous"
+                           th:href="@{'/profile/' + ${section}(page=${pages.pageNum - 1})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
-<!--                        <a aria-label="Previous" th:if="${section == 'replies'}" th:href="@{/profile/replies/(page=${pages.pageNum - 1})}">-->
-<!--                            <span aria-hidden="true">&laquo;</span>-->
-<!--                        </a>-->
                     </li>
-                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage)}" th:class="${pages.pageNum == i} ? 'active' : ''">
-                        <a th:if="${section == 'problems'}" th:href="@{'/profile/' + ${section}(page=${i})}" th:text="${i}" ></a>
-<!--                        <a th:if="${section == 'replies'}" th:href="@{/profile/replies/(page=${i})}" th:text="${i}" ></a>-->
+                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage)}"
+                        th:class="${pages.pageNum == i} ? 'active' : ''">
+                        <a th:href="@{'/profile/' + ${section}(page=${i})}"
+                           th:text="${i}"></a>
                     </li>
                     <li th:if="${pages.pageNum != pages.totalPage}">
-                        <a aria-label="Next" th:if="${section == 'problems'}" th:href="@{'/profile/' + ${section}(page=${pages.pageNum + 1})}">
+                        <a aria-label="Next"
+                           th:href="@{'/profile/' + ${section}(page=${pages.pageNum + 1})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
-<!--                        <a aria-label="Next" th:if="${section == 'replies'}" th:href="@{/profile/replies/(page=${pages.pageNum + 1})}">-->
-<!--                            <span aria-hidden="true">&raquo;</span>-->
-<!--                        </a>-->
                     </li>
                 </ul>
             </nav>
-
         </div>
         <div class="col-md-3 col-md-12 col-sm-12 col-xs-12 small-navigation">
             <div class="list-group">
-                <a href="/profile/problems" th:class="${section == 'problems'} ? 'list-group-item active' : 'list-group-item'">我的问题</a>
-                <a href="/profile/replies" th:class="${section == 'replies'} ? 'list-group-item active' : 'list-group-item'">最新回复<span class="badge">14</span></a>
+                <a href="/profile/problems"
+                   th:class="${section == 'problems'} ? 'list-group-item active' : 'list-group-item'">我的问题</a>
+                <a href="/profile/replies"
+                   th:class="${section == 'replies'} ? 'list-group-item active' : 'list-group-item'">最新回复<span
+                        class="badge" th:text="${session.unreadCount}"></span></a>
             </div>
         </div>
     </div>

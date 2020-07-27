@@ -43,7 +43,7 @@ public class ProblemService {
         pagenationDTO.setPageSize(pageInfo.getPageSize());
         pagenationDTO.setTotalCount((int) pageInfo.getTotal());
         pagenationDTO.setTotalPage(pageInfo.getPages());
-        pagenationDTO.setProblems(pageInfo.getList());
+        pagenationDTO.setData(pageInfo.getList());
         return pagenationDTO;
     }
 
@@ -56,7 +56,7 @@ public class ProblemService {
         pagenationDTO.setPageSize(pageInfo.getPageSize());
         pagenationDTO.setTotalCount((int) pageInfo.getTotal());
         pagenationDTO.setTotalPage(pageInfo.getPages());
-        pagenationDTO.setProblems(pageInfo.getList());
+        pagenationDTO.setData(pageInfo.getList());
         return pagenationDTO;
     }
 

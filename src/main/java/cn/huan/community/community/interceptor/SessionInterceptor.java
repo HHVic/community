@@ -2,6 +2,7 @@ package cn.huan.community.community.interceptor;
 
 import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.service.AccountService;
+import cn.huan.community.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private NotificationService notificationService;
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         //System.out.println("经过session拦截器");
@@ -30,6 +34,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     account = accountService.getByToken(token);
                     if(account != null){
                         request.getSession().setAttribute("user",account);
+                        long unreadCount = notificationService.unread(account.getId());
+                        request.getSession().setAttribute("unreadCount",unreadCount);
                     }
                     break;
                 }

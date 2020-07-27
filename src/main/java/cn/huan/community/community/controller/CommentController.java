@@ -31,7 +31,7 @@ public class CommentController {
             return ResultDTO.error(CustomizeErrorCode.COMMENT_COMTENT_EMPTY);
         }
         commentDTO.setCommentator(user.getId());
-        commentService.comment(commentDTO);
+        commentService.comment(commentDTO,user);
         return ResultDTO.ok();
     }
 

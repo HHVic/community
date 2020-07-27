@@ -37,6 +37,7 @@
                 </span>
             </div>
             <hr/>
+            <!-- 编辑 -->
             <a class="text-desc" th:href="@{'/publish/' + ${problem.id}}">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑
             </a><br/>
@@ -145,7 +146,7 @@
                 <h4>相关问题</h4>
                 <ul class="relation-list">
                     <li class="relation" th:each="item : ${relations}">
-                        <a th:href="@{'/problems/' + ${item.id}}" class="link" th:text="${item.title}"></a>
+                        <a th:href="@{'/problems/' + ${item.id}}" class="text-link" th:text="${item.title}"></a>
                     </li>
                 </ul>
             </div>

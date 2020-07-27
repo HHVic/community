@@ -10,5 +10,5 @@ public class PagenationDTO<T> {
     private int pageSize;
     private int totalPage;
     private int totalCount;
-    private List<T> problems;
+    private List<T> data;
 }
