@@ -87,7 +87,7 @@ public class GithubProvider {
                 .url("https://api.github.com/user?access_token=" + accessToken)
                 .build();
 
-        OkHttpClient client = getUnsafeOkHttpClient();
+        OkHttpClient client = OKHttpClientBuilder.buildOKHttpClient().build();
         if(client == null){
             log.error("连接获取失败");
         }
@@ -154,7 +154,7 @@ public class GithubProvider {
         return null;*/
     }
 
-    public OkHttpClient getUnsafeOkHttpClient() {
+    /*public OkHttpClient getUnsafeOkHttpClient() {
 
         try {
             log.info("getUnsafeOkHttpClient 执行");
@@ -195,5 +195,5 @@ public class GithubProvider {
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 }
