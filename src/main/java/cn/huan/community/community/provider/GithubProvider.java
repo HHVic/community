@@ -3,6 +3,7 @@ package cn.huan.community.community.provider;
 import cn.huan.community.community.dto.AccessToken;
 import cn.huan.community.community.dto.GithubUser;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -11,16 +12,18 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@Slf4j
 @Component
 public class GithubProvider {
     public String getAccessToken(AccessToken accessToken) {
+        log.info("获取accessToken");
         MediaType JsonType = MediaType.get("application/json; charset=utf-8");
 
         OkHttpClient client = getUnsafeOkHttpClient();;
 
         String json = JSON.toJSONString(accessToken);
         String url = "https://github.com/login/oauth/access_token";
-
+        log.info("获取accessToken请求参数:{}",json);
         RequestBody body = RequestBody.create(json,JsonType);
         Request request = new Request.Builder()
                 .url(url)
@@ -28,10 +31,12 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
+            log.info("获取accessTokenq返回结果:{}",string);
             System.out.println(string);
             String token = string.split("&")[0].split("=")[1];
             return token;
         } catch (IOException e) {
+            log.error("获取accessToken失败:{}",e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -78,6 +83,7 @@ public class GithubProvider {
     }
 
     public GithubUser getUser(String accessToken) {
+        log.info("通过accessToken:{}获取用户信息",accessToken);
         Request request = new Request.Builder()
                 .url("https://api.github.com/user?access_token=" + accessToken)
                 .build();
@@ -85,7 +91,8 @@ public class GithubProvider {
         OkHttpClient client = getUnsafeOkHttpClient();
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            System.out.println(string);
+            log.info("通过accessToken:{}获取的用户:{}",accessToken,string);
+            //System.out.println(string);
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
             return githubUser;
         } catch (IOException e) {

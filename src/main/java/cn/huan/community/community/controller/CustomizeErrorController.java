@@ -1,5 +1,6 @@
 package cn.huan.community.community.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Map;
 
-@Controller()
+@Slf4j
+@Controller
 @RequestMapping("/error")
 public class CustomizeErrorController implements ErrorController {
 
@@ -27,7 +29,7 @@ public class CustomizeErrorController implements ErrorController {
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView errorHtml(HttpServletRequest request, Model model) {
         HttpStatus status = getStatus(request);
-
+        log.error("异常无法处理");
         if(status.is4xxClientError()){
             model.addAttribute("message","请求资源不存在");
         }

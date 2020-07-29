@@ -4,6 +4,7 @@ import cn.huan.community.community.dto.ResultDTO;
 import cn.huan.community.community.exception.CustomizeErrorCode;
 import cn.huan.community.community.exception.CustomizeException;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Slf4j
 @ControllerAdvice
 public class CustomizeExceptionHandler {
     @ExceptionHandler(Exception.class)
@@ -24,9 +26,12 @@ public class CustomizeExceptionHandler {
             //返回json
             ResultDTO resultDTO ;
             if(e instanceof CustomizeException){
+                log.error(e.getMessage());
                 resultDTO =  ResultDTO.error((CustomizeException) e);
             }
             else{
+                e.printStackTrace();
+                log.error(e.getMessage());
                 resultDTO =  ResultDTO.error(CustomizeErrorCode.SYSTEM_ERROR);
             }
             response.setContentType("application/json");
@@ -36,6 +41,7 @@ public class CustomizeExceptionHandler {
                 writer = response.getWriter();
                 writer.write(JSON.toJSONString(resultDTO));
             } catch (IOException ex) {
+                log.error(e.getMessage());
                 ex.printStackTrace();
             }finally {
                 if(writer != null){

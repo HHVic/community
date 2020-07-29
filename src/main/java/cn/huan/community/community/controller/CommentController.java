@@ -7,6 +7,7 @@ import cn.huan.community.community.dto.ResultDTO;
 import cn.huan.community.community.enums.CommentTypeEnum;
 import cn.huan.community.community.exception.CustomizeErrorCode;
 import cn.huan.community.community.service.CommentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class CommentController {
     @Autowired
@@ -32,6 +34,7 @@ public class CommentController {
         }
         commentDTO.setCommentator(user.getId());
         commentService.comment(commentDTO,user);
+        log.info("用户:{} 评论成功！",user.getUserName());
         return ResultDTO.ok();
     }
 
