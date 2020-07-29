@@ -191,6 +191,7 @@ public class GithubProvider {
             log.info("获取OkHttpClient");
             return build;
         } catch (Exception e) {
+            log.info("获取失败:{}",e.getMessage());
             throw new RuntimeException(e);
         }
 
