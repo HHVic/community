@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.net.ssl.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 @Slf4j
 @Component
@@ -21,6 +19,7 @@ public class GithubProvider {
 
         OkHttpClient client = getUnsafeOkHttpClient();;
 
+        log.info("获取OkHttpClient客户端");
         String json = JSON.toJSONString(accessToken);
         String url = "https://github.com/login/oauth/access_token";
         log.info("获取accessToken请求参数:{}",json);
@@ -89,6 +88,9 @@ public class GithubProvider {
                 .build();
 
         OkHttpClient client = getUnsafeOkHttpClient();
+        if(client == null){
+            log.error("连接获取失败");
+        }
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
             log.info("通过accessToken:{}获取的用户:{}",accessToken,string);
@@ -155,6 +157,7 @@ public class GithubProvider {
     public OkHttpClient getUnsafeOkHttpClient() {
 
         try {
+            log.info("getUnsafeOkHttpClient 执行");
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
@@ -184,8 +187,9 @@ public class GithubProvider {
                     return true;
                 }
             });
-
-            return builder.build();
+            OkHttpClient build = builder.build();
+            log.info("获取OkHttpClient");
+            return build;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
