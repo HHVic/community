@@ -16,8 +16,7 @@ public class GithubProvider {
     public String getAccessToken(AccessToken accessToken) {
         log.info("获取accessToken");
         MediaType JsonType = MediaType.get("application/json; charset=utf-8");
-
-        OkHttpClient client = getUnsafeOkHttpClient();;
+        OkHttpClient client = OKHttpClientBuilder.buildOKHttpClient().build();
 
         log.info("获取OkHttpClient客户端");
         String json = JSON.toJSONString(accessToken);
