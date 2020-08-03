@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
-import javax.net.ssl.*;
 import java.io.IOException;
 
 @Slf4j

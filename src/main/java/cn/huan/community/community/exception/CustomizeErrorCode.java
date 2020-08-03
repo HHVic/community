@@ -17,6 +17,10 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     NOTIFICATION_NOT_MATCHED(4002,"此通知不属于你"),
     //5XXXX系统异常
     SYSTEM_ERROR(5001,"服务器异常"),
+    //6XXXX文件上传异常
+    FILE_NOT_FOUND(6001,"图片不存在"),
+    FILE_CANT_OVER_1M(6002,"图片不能超过1M"),
+    FILE_UPLOAD_FAILED(6003,"图片上传失败"),
 
     ;
 

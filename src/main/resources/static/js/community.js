@@ -121,9 +121,18 @@ function rander(id) {
 }
 
 function selectTag(value) {
-    var pre = $("#tags").val();
 
-    if (pre.indexOf(value) == -1) {
+    var pre = $("#tags").val();
+    var items = pre.split(",");
+
+    var flag = false;
+    for(var i = 0;i < items.length;++i){
+        if(items[i] == value){
+            flag = true;
+            break;
+        }
+    }
+    if(flag == false){
         if (pre) {
             $("#tags").val(pre + ',' + value);
         } else {
