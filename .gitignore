@@ -2,7 +2,7 @@ git add .HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/test/**/target/
+!**/src/test
 logs/
 ### STS ###
 .apt_generated

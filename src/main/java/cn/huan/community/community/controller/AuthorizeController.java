@@ -46,24 +46,23 @@ public class AuthorizeController {
         System.out.println(token);
         GithubUser user = githubProvider.getUser(token);
 
-        if(user != null){
+        if (user != null) {
             //登录成功
-            Account account = new Account();
-            account.setAccountId(user.getId().toString());
-            account.setUserName(user.getLogin());
-            String token1 = UUID.randomUUID().toString();
-            account.setToken(token1);
-            account.setGmtCreate(System.currentTimeMillis());
-            account.setGmtModified(System.currentTimeMillis());
-            account.setAvatarUrl(user.getAvatarUrl());
-            if(accountService.loginFromGithub(account) == 1){
+//            Account account = new Account();
+//            account.setAccountId(user.getId().toString());
+//            account.setUserName(user.getLogin());
+//            String token1 = UUID.randomUUID().toString();
+//            account.setToken(token1);
+//            account.setGmtCreate(System.currentTimeMillis());
+//            account.setGmtModified(System.currentTimeMillis());
+//            account.setAvatarUrl(user.getAvatarUrl());
+            if(accountService.loginFromGithub(user, token) == 1){
                 //写cookie
-                response.addCookie(new Cookie("token",token1));
+                response.addCookie(new Cookie("token", token));
                 //request.getSession().setAttribute("user",user);
             }
-            return "redirect:";
-        }else{
-            return "redirect:";
         }
+        return "redirect:";
+
     }
 }
