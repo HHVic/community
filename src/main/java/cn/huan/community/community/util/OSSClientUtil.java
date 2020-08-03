@@ -154,6 +154,7 @@ public class OSSClientUtil {
      * @return 出错返回"" ,唯一MD5数字签名
      */
     public String uploadFile2OSS(InputStream instream, String fileName) {
+        log.info("文件上传开始");
         String ret = "";
         try {
             //创建上传Object的Metadata
@@ -167,7 +168,7 @@ public class OSSClientUtil {
             PutObjectResult putResult = ossClient.putObject(bucketName, filedir + fileName, instream, objectMetadata);
             ret = putResult.getETag();
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
         } finally {
             try {
                 if (instream != null) {

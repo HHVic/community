@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,12 +26,11 @@ public class FileController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public FileDTO upload(@RequestParam("guid")String guid) throws FileNotFoundException {
+    public FileDTO upload(@RequestParam("editormd-image-file")MultipartFile multipartFile) throws Exception {
 
-        File file = new File("D:\\Desktop\\图片.png");
-        InputStream is = new FileInputStream(file);
-        String name = ossClientUtil.uploadFile2OSS(is,file.getName());
-        String imgUrl = ossClientUtil.getImgUrl(file.getName());
+        InputStream is = multipartFile.getInputStream();
+        String name = ossClientUtil.uploadFile2OSS(is,multipartFile.getOriginalFilename());
+        String imgUrl = ossClientUtil.getImgUrl(multipartFile.getOriginalFilename());
         FileDTO fileDTO = new FileDTO();
         fileDTO.setSuccess(1);
         fileDTO.setMessage("上传成功");
