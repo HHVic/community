@@ -31,36 +31,36 @@ public class LoginTest {
     private ProblemService problemService;
     @Test
     public void test(){
-        GithubUser githubUser = new GithubUser();
-        githubUser.setId(44734532L);
-        githubUser.setLogin("HHVic");
-
-        Account u = new Account();
-        u.setAccountId(githubUser.getId().toString());
-        u.setUserName(githubUser.getLogin());
-        String token1 = UUID.randomUUID().toString();
-        u.setToken(token1);
-        u.setGmtCreate(System.currentTimeMillis());
-        u.setGmtModified(System.currentTimeMillis());
-        System.out.println(userService.loginFromGithub(u));
+//        GithubUser githubUser = new GithubUser();
+//        githubUser.setId(44734532L);
+//        githubUser.setLogin("HHVic");
+//
+//        Account u = new Account();
+//        u.setAccountId(githubUser.getId().toString());
+//        u.setUserName(githubUser.getLogin());
+//        String token1 = UUID.randomUUID().toString();
+//        u.setToken(token1);
+//        u.setGmtCreate(System.currentTimeMillis());
+//        u.setGmtModified(System.currentTimeMillis());
+//        System.out.println(userService.loginFromGithub(u));
     }
     @Test
     public void testToken(){
-        String token = "5ee3e5a5-f3c3-443f-ae5e-9baa949c18a1";
-        Account user = userService.getByToken(token);
-        System.out.println(user);
+//        String token = "5ee3e5a5-f3c3-443f-ae5e-9baa949c18a1";
+//        Account user = userService.getByToken(token);
+//        System.out.println(user);
     }
 
     @Test
     public void testAccount(){
-        int accountId = 44734532;
-        Account user = userMapper.selectByPrimaryKey(accountId);
-        System.out.println(user);
+//        int accountId = 44734532;
+//        Account user = userMapper.selectByPrimaryKey(accountId);
+//        System.out.println(user);
     }
     @Test
     public void listProblem(){
-        List<ProblemDTO> list = problemService.list();
-        System.out.println(list);
+//        List<ProblemDTO> list = problemService.list();
+//        System.out.println(list);
     }
     @Test
     public void testAddProblem(){
