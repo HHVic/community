@@ -31,10 +31,13 @@ public class GithubProvider {
             log.info("获取accessTokenq返回结果:{}",string);
             System.out.println(string);
             String token = string.split("&")[0].split("=")[1];
+            response.close();
             return token;
         } catch (IOException e) {
             log.error("获取accessToken失败:{}",e.getMessage());
             e.printStackTrace();
+        }finally {
+
         }
         return null;
         /*CloseableHttpClient httpClient = HttpClientBuilder.create().build();

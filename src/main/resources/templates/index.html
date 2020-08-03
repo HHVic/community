@@ -46,7 +46,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage)}" th:class="${pages.pageNum == i} ? 'active' : ''">
+                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage >= 1 ? pages.totalPage : 1)}" th:class="${pages.pageNum == i} ? 'active' : ''">
                         <a th:href="@{/(page=${i})}" th:text="${i}" ></a>
                     </li>
                     <li th:if="${pages.pageNum != pages.totalPage}">

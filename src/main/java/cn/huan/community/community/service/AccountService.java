@@ -16,7 +16,9 @@ public class AccountService {
 
     @Transactional
     public int loginFromGithub(Account Account){
-        Account u = accountMapper.selectByPrimaryKey(Account.getId());
+        AccountExample accountExample = new AccountExample();
+        accountExample.createCriteria().andAccountIdEqualTo(Account.getId().toString());
+        Account u = accountMapper.selectByExample(accountExample).get(0);
         if(u == null){
             //插入
             return accountMapper.insert(Account);

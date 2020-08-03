@@ -63,7 +63,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage)}"
+                    <li th:each="i : ${#numbers.sequence(1,pages.totalPage >= 1 ? pages.totalPage : 1)}"
                         th:class="${pages.pageNum == i} ? 'active' : ''">
                         <a th:href="@{'/profile/' + ${section}(page=${i})}"
                            th:text="${i}"></a>
