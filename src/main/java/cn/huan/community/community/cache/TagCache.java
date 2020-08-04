@@ -69,9 +69,9 @@ public class TagCache {
         return tagDTOS;
     }
 
-    public static String filterInvalid(String tags){
+    public static String filterInvalid(List<Tag> DBtags, String tags){
         String[] split = tags.split(",");
-        List<TagDTO> tagDTOS = get();
+        List<TagDTO> tagDTOS = getFromMysql(DBtags);
         List<String> tagList = tagDTOS.stream().flatMap(tag -> tag.getTags().stream()).collect(Collectors.toList());
         String invalid = Arrays.stream(split).filter(t -> !tagList.contains(t)).collect(Collectors.joining(","));
         return invalid;
