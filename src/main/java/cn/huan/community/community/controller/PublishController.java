@@ -3,7 +3,9 @@ package cn.huan.community.community.controller;
 import cn.huan.community.community.cache.TagCache;
 import cn.huan.community.community.domain.Account;
 import cn.huan.community.community.domain.Problem;
+import cn.huan.community.community.domain.Tag;
 import cn.huan.community.community.service.ProblemService;
+import cn.huan.community.community.service.TagService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -18,9 +21,13 @@ public class PublishController {
     @Autowired
     private ProblemService problemService;
 
+    @Autowired
+    private TagService tagService;
+
     @GetMapping("/publish")
     public String publish(Model model) {
-        model.addAttribute("tagCache", TagCache.get());
+        List<Tag> tags = tagService.getFromMysql();
+        model.addAttribute("tagCache", TagCache.getFromMysql(tags));
         return "publish";
     }
 
@@ -32,11 +39,12 @@ public class PublishController {
                             HttpServletRequest request,
                             Model model
     ) {
+        List<Tag> tagList = tagService.getFromMysql();
 
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tags",tags);
-        model.addAttribute("tagCache", TagCache.get());
+        model.addAttribute("tagCache", TagCache.getFromMysql(tagList));
         if(title == null || title == ""){
             model.addAttribute("error","标题不能为空");
             return "publish";

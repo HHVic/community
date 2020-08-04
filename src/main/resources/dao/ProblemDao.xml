@@ -3,7 +3,6 @@
 <mapper namespace="cn.huan.community.community.dao.ProblemDao">
     <resultMap extends="cn.huan.community.community.mapper.ProblemMapper.BaseResultMap" id="ProblemUserMap"
                type="cn.huan.community.community.dto.ProblemDTO">
-        <!--一对一教师个人基本信息实体映射-->
         <association property="account" javaType="cn.huan.community.community.domain.Account"
                      resultMap="cn.huan.community.community.mapper.AccountMapper.BaseResultMap"/>
     </resultMap>
