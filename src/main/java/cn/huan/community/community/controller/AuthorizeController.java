@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -56,7 +57,7 @@ public class AuthorizeController {
 //            account.setGmtCreate(System.currentTimeMillis());
 //            account.setGmtModified(System.currentTimeMillis());
 //            account.setAvatarUrl(user.getAvatarUrl());
-            if(accountService.loginFromGithub(user, token) == 1){
+            if (accountService.loginFromGithub(user, token) == 1) {
                 //写cookie
                 response.addCookie(new Cookie("token", token));
                 //request.getSession().setAttribute("user",user);
@@ -64,5 +65,20 @@ public class AuthorizeController {
         }
         return "redirect:";
 
+    }
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        //清session
+        request.getSession().removeAttribute("user");
+        //清cookie
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
