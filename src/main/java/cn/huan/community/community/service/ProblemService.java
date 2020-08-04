@@ -30,14 +30,14 @@ public class ProblemService {
         problemMapper.insert(problem);
     }
 
-    public List<ProblemDTO> list() {
-        return problemDao.list();
+    public List<ProblemDTO> list(String keyword) {
+        return problemDao.list(keyword);
     }
 
-    public PagenationDTO<ProblemDTO> listPage(Integer page, Integer size) {
+    public PagenationDTO<ProblemDTO> listPage(Integer page, Integer size ,String keyword) {
         PageHelper.startPage(page, size);
         PagenationDTO pagenationDTO = new PagenationDTO();
-        PageInfo<ProblemDTO> pageInfo = new PageInfo<>(list());
+        PageInfo<ProblemDTO> pageInfo = new PageInfo<>(list(keyword));
 
         pagenationDTO.setPageNum(pageInfo.getPageNum());
         pagenationDTO.setPageSize(pageInfo.getPageSize());

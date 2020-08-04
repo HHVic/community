@@ -19,11 +19,12 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(value = "page",defaultValue = "1")int page,
-                        @RequestParam(value = "size",defaultValue = "3")int size){
+                        @RequestParam(value = "size",defaultValue = "3")int size,
+                        @RequestParam(value = "keyword",defaultValue = "")String keyword){
         Account user = (Account) request.getSession().getAttribute("user");
         //获取文章列表
         //List<ProblemDTO> problems = problemService.list();
-        PagenationDTO<ProblemDTO> pages = problemService.listPage(page,size);
+        PagenationDTO<ProblemDTO> pages = problemService.listPage(page,size,keyword);
         model.addAttribute("pages",pages);
         return "index";
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProblemDao {
 
-    List<ProblemDTO> list();
+    List<ProblemDTO> list(@Param("keyword")String keyword);
 
     List<ProblemDTO> listByUser(@Param("userId")int userId);
 

@@ -9,12 +9,8 @@
     </resultMap>
 
     <select id="list" resultMap="ProblemUserMap">
-        SELECT
-            p.*,
-            a.*
-        FROM
-            problem p
-            LEFT JOIN account a ON p.creator = a.id
+        SELECT p.*, a.* FROM problem p LEFT JOIN account a ON p.creator = a.id
+        where p.title like '%${keyword}%' or p.description like '%${keyword}%'
         order by p.gmt_create desc
     </select>
 
